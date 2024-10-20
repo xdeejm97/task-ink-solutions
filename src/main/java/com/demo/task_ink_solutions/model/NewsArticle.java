@@ -19,11 +19,11 @@ public class NewsArticle {
     @Column(length = 1024)
     private String description;
 
-    @Column(length = 1024)
+    @Column(length = 2048)
     private String url;
 
-    private String cityUs;
+    private String cityOfUSA;
 
-    private String isLocalOrGlobal;
+    private String localOrGlobal;
 
 }

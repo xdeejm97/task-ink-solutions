@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class ProcessOpenAI {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewsProcessService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessOpenAI.class);
 
     private final RestTemplate restTemplate;
 
@@ -41,7 +41,7 @@ public class ProcessOpenAI {
             return makeApiCall(entity);
         } catch (RestClientException e) {
             logger.error("Error calling OpenAI API: {}", e.getMessage(), e);
-            return null;
+            throw e;
         }
     }
 
@@ -60,7 +60,9 @@ public class ProcessOpenAI {
                         "1. The first line should be 'local' or 'global'. \n" +
                         "2. The second line should be the city name (if local) or 'none' (if global).\n\n" +
                         "Example output:\n" +
-                        "local\nBuenosAires or global\nnone", input));
+                        "local\nBuenosAires\n\n" +
+                        "or\n\n" +
+                        "global\nnone", input));
         requestBody.putArray("messages").add(message);
 
         return requestBody;

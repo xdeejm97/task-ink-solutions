@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 public class NewsServiceImpl {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewsProcessService.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewsServiceImpl.class);
 
     private final NewsArticleRepository newsArticleRepository;
     private final CityRepository cityRepository;
@@ -71,16 +71,16 @@ public class NewsServiceImpl {
                         if (cities.size() == 1) {
                             City city = cities.get(0);
                             if (cityName.equalsIgnoreCase(city.getName())) {
-                                article.setCityUs(city.getName());
-                                article.setIsLocalOrGlobal(localityType);
+                                article.setCityOfUSA(city.getName());
+                                article.setLocalOrGlobal(localityType);
                             } else {
-                                article.setCityUs(name);
-                                article.setIsLocalOrGlobal("global");
+                                article.setCityOfUSA(name);
+                                article.setLocalOrGlobal("global");
                             }
                         }
                     } else {
-                        article.setCityUs("none");
-                        article.setIsLocalOrGlobal("global");
+                        article.setCityOfUSA("none");
+                        article.setLocalOrGlobal("global");
                     }
 
                     newsArticleRepository.save(article);
@@ -94,7 +94,7 @@ public class NewsServiceImpl {
     }
 
     public void scrapeNewsBySports(String cityName) {
-        ResponseEntity<ApiResponse> response = restTemplate.getForEntity(URL_NEWS + "news?keywords={cityName}%sport&limit=100&languages=en&countries=us,+ca&access_key={apiKey}", ApiResponse.class, cityName, NEWS_API_KEY);
+        ResponseEntity<ApiResponse> response = restTemplate.getForEntity(URL_NEWS + "news?keywords={cityName}&limit=100&languages=en&countries=us,+ca&access_key={apiKey}", ApiResponse.class, cityName + " sport", NEWS_API_KEY);
 
         try {
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
@@ -124,16 +124,16 @@ public class NewsServiceImpl {
                         if (cities.size() == 1) {
                             City city = cities.get(0);
                             if (cityName.equalsIgnoreCase(city.getName())) {
-                                article.setCityUs(city.getName());
-                                article.setIsLocalOrGlobal(localityType);
+                                article.setCityOfUSA(city.getName());
+                                article.setLocalOrGlobal(localityType);
                             } else {
-                                article.setCityUs(name);
-                                article.setIsLocalOrGlobal("global");
+                                article.setCityOfUSA(name);
+                                article.setLocalOrGlobal("global");
                             }
                         }
                     } else {
-                        article.setCityUs("none");
-                        article.setIsLocalOrGlobal("global");
+                        article.setCityOfUSA("none");
+                        article.setLocalOrGlobal("global");
                     }
 
                     newsArticleRepository.save(article);

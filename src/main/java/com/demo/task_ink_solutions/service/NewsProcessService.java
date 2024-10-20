@@ -26,7 +26,7 @@ public class NewsProcessService {
         return newsArticleRepository.findAll();
     }
 
-    public void scrapeAllNews(String name) {
+    public void scrapeNewsForCityAndSport(String name) {
         try {
             newsService.scrapeNewsByCity(name);
             newsService.scrapeNewsBySports(name);
