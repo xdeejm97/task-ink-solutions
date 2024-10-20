@@ -26,10 +26,9 @@ public class NewsProcessService {
         return newsArticleRepository.findAll();
     }
 
-    public void scrapeNewsForCityAndSport(String name) {
+    public void scrapeNewsForCity(String name) {
         try {
             newsService.scrapeNewsByCity(name);
-            newsService.scrapeNewsBySports(name);
         } catch (DataAccessException e) {
             logger.error("Database access error while saving the article: {}", e.getMessage());
         } catch (Exception e) {
