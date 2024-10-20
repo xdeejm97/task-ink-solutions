@@ -26,7 +26,7 @@ public class LocalNewsController {
 
     @PostMapping("/scrape-news/{city}")
     public String scrapeNews(@PathVariable("city") String city) {
-        newsService.scrapeNewsForCityAndSport(city);
+        newsService.scrapeNewsForCity(city);
         return "News scraped and processed successfully";
     }
 }

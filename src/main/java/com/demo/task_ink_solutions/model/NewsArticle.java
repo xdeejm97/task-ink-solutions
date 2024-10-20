@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "news")
+@Table(name = "news", indexes = {
+        @Index(name = "idx_city_name", columnList = "cityOfUSA"),
+        @Index(name = "idx_is_local", columnList = "localOrGlobal")
+})
 @Getter
 @Setter
 @RequiredArgsConstructor
