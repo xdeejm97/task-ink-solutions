@@ -5,7 +5,9 @@ It integrates external APIs for news scraping and uses OpenAI to analyze and cat
 
 ## Features
 
-* Scraping news from API
+* Introduced a REST API for managing city and news article data.
+* Added functionality to import city data from an online CSV file.
+* Implemented news scraping capabilities for local and global articles.
 * OpenAI support for analyzing and categorizing aticles
 
 ## Download
@@ -21,5 +23,5 @@ Clone project from my github account - xdeejm97 - and then run in
 ### Setup backend
 1. Run `mvn install` from the repository
 2. Run `BackendApplication`
-3. Open http://localhost:8080/api/import-cities in the browser. Then put /cities endpoint, so you should be able to see a list of cities in the USA.
-4. To scrape news you should put endpoint /scrape-news/{city} to get news in proper city. To list the news use /news/city endpoint
+3. Open http://localhost:8080/api/import-cities in the browser. Then put api/cities endpoint, so you should be able to see a list of cities in the USA.
+4. To scrape news you should put endpoint api/scrape-news/{city} to get news in proper city. To list the news use api/news/city endpoint
