@@ -27,7 +27,7 @@ public class ProcessOpenAI {
     }
 
     @Value("${openai.api.key}")
-    private String OPENAI_API_KEY;
+    protected String OPENAI_API_KEY;
 
     public String processPrompt(String input) {
         ObjectMapper mapper = new ObjectMapper();
@@ -45,7 +45,7 @@ public class ProcessOpenAI {
         }
     }
 
-    private ObjectNode createRequestBody(String input, ObjectMapper mapper) {
+    protected ObjectNode createRequestBody(String input, ObjectMapper mapper) {
         ObjectNode requestBody = mapper.createObjectNode();
         requestBody.put("model", "gpt-4o-mini");
 
@@ -68,7 +68,7 @@ public class ProcessOpenAI {
         return requestBody;
     }
 
-    private HttpHeaders createHeaders() {
+    protected HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(OPENAI_API_KEY);
         headers.setContentType(MediaType.APPLICATION_JSON);
