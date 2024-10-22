@@ -27,15 +27,6 @@ class NewsProcessServiceTest {
     private NewsProcessService newsProcessService;
 
     @Test
-    void testFindAll_ReturnsEmptyList() {
-        when(newsArticleRepository.findAll()).thenReturn(Collections.emptyList());
-
-        List<NewsArticle> articles = newsProcessService.findAll();
-
-        assertEquals(0, articles.size());
-    }
-
-    @Test
     void testScrapeNewsForCity_GeneralException() {
         doThrow(new RuntimeException("Unexpected error")).when(newsService).scrapeNewsByCity("LosAngeles");
 

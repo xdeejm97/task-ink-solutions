@@ -41,7 +41,7 @@ public class NewsServiceImpl {
 
 
     public void scrapeNewsByCity(String cityName) {
-        ResponseEntity<ApiResponse> response = restTemplate.getForEntity(URL_NEWS + "news?keywords={cityName}&limit=100&languages=en&countries=us,+ca&access_key={apiKey}", ApiResponse.class, cityName, NEWS_API_KEY);
+        ResponseEntity<ApiResponse> response = restTemplate.getForEntity(URL_NEWS + "news?keywords={cityName}&limit=12&languages=en&countries=us,+ca&access_key={apiKey}", ApiResponse.class, cityName, NEWS_API_KEY);
 
         try {
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
@@ -59,6 +59,7 @@ public class NewsServiceImpl {
                     String openAiResponse = processWithOpenAI.processPrompt(article.getTitle() + " " + article.getDescription());
                     JsonNode openAiJson = mapper.readTree(openAiResponse);
                     String content = openAiJson.path("choices").get(0).path("message").path("content").asText();
+                    System.out.println(content);
 
                     // Parse the OpenAI response
                     String[] parts = content.split("\n");
@@ -71,15 +72,18 @@ public class NewsServiceImpl {
                         if (cities.size() == 1) {
                             City city = cities.get(0);
                             if (cityName.equalsIgnoreCase(city.getName())) {
-                                article.setCityOfUSA(city.getName());
+                                article.setCityOfUSA(cityName);
                                 article.setLocalOrGlobal(localityType);
                             } else {
                                 article.setCityOfUSA(name);
                                 article.setLocalOrGlobal("global");
                             }
+                        }else {
+                            article.setCityOfUSA(cityName);
+                            article.setLocalOrGlobal("global");
                         }
                     } else {
-                        article.setCityOfUSA("none");
+                        article.setCityOfUSA(cityName);
                         article.setLocalOrGlobal("global");
                     }
 
