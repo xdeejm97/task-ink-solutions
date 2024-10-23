@@ -22,8 +22,8 @@ public class NewsProcessService {
         this.newsArticleRepository = newsArticleRepository;
     }
 
-    public List<NewsArticle> findAll() {
-        return newsArticleRepository.findAll();
+    public List<NewsArticle> findByCityOfUSAIgnoreCase(String city) {
+        return newsArticleRepository.findByCityOfUSAIgnoreCase(city);
     }
 
     public void scrapeNewsForCity(String name) {
