@@ -26,11 +26,6 @@ public class CityController {
         this.cityRepository = cityRepository;
     }
 
-//    @GetMapping(path = "/cities")
-//    public ResponseEntity<List<City>> findAll(){
-//        return ResponseEntity.ok(cityRepository.findAll());
-//    }
-
     @GetMapping(path = "/cities")
     public ResponseEntity<List<City>> findCitiesByQuery(
             @RequestParam(required = false) String query,
@@ -40,14 +35,11 @@ public class CityController {
         Pageable pageable = PageRequest.of(page, size);
         Page<City> cities;
 
-        // Querying cities based on input
         if (query != null && !query.isEmpty()) {
             cities = cityRepository.findByNameContainingIgnoreCase(query, pageable);
         } else {
             cities = cityRepository.findAll(pageable);
         }
-
-        // Return only the content of the page (list of cities)
         return ResponseEntity.ok(cities.getContent());
     }
 
