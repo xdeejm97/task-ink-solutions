@@ -7,14 +7,17 @@ import lombok.*;
 @Table(name = "news", indexes = {
         @Index(name = "idx_city_name", columnList = "cityOfUSA"),
         @Index(name = "idx_is_local", columnList = "localOrGlobal")
+}, uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"title", "city_ofusa"})
 })
 @Getter
 @Setter
 @RequiredArgsConstructor
-@IdClass(NewsId.class)
 public class NewsArticle {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(length = 1024)
     private String title;
 
@@ -24,7 +27,6 @@ public class NewsArticle {
     @Column(length = 2048)
     private String url;
 
-    @Id
     private String cityOfUSA;
 
     private String localOrGlobal;

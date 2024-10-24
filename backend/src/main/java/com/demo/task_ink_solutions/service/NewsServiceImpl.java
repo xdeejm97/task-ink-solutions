@@ -34,14 +34,14 @@ public class NewsServiceImpl {
         this.processWithOpenAI = processWithOpenAI;
     }
 
-    private final String URL_NEWS = "https://api.mediastack.com/v1/";
+    private static final String URL_NEWS = "https://api.mediastack.com/v1/";
 
     @Value("${news.api.key}")
     private String NEWS_API_KEY;
 
 
     public void scrapeNewsByCity(String cityName) {
-        ResponseEntity<ApiResponse> response = restTemplate.getForEntity(URL_NEWS + "news?keywords={cityName}&limit=15&languages=en&countries=us,+ca&access_key={apiKey}", ApiResponse.class, cityName, NEWS_API_KEY);
+        ResponseEntity<ApiResponse> response = restTemplate.getForEntity(URL_NEWS + "news?keywords={cityName}&limit=13&languages=en&countries=us,+ca&access_key={apiKey}", ApiResponse.class, cityName, NEWS_API_KEY);
 
         try {
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {

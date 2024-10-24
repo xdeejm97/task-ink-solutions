@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './styles/NewsList.css';
+import {Circles} from "react-loader-spinner";
 
 const NewsList = ({selectedCity}) => {
     const [newsArticles, setNewsArticles] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const scrapeNewsForCity = async (city) => {
@@ -18,7 +19,6 @@ const NewsList = ({selectedCity}) => {
     };
 
     const fetchNewsArticles = async (city) => {
-        setIsLoading(true);
         setError(null);
 
         try {
@@ -72,7 +72,12 @@ const NewsList = ({selectedCity}) => {
     return (
         <div className="news-container">
             <h2>News for {selectedCity}</h2>
-            {isLoading && <div className="loading-spinner"></div>}
+            {isLoading && <Circles
+                color= "#00796b"
+                wrapperClass={"loader"}
+                ariaLabel="circles-loading"
+                visible={true}
+            />}
             {error && <p className="error-message">{error}</p>}
             <ul>
                 {newsArticles.map(article => (
