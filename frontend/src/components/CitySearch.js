@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 import {debounce} from 'lodash';
@@ -35,24 +35,6 @@ const CitySearch = ({onCitySelect}) => {
         []
     );
 
-
-    const checkAndImportCities = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/cities');
-            if (response.data.length === 0) {
-                console.log("Cities not found, triggering import.");
-            } else {
-                setCityOptions(formatCityOptions(response.data));
-            }
-        } catch (error) {
-            console.error("Error checking cities:", error);
-            setError("Error loading cities");
-        }
-    };
-    useEffect(() => {
-        checkAndImportCities();
-    }, []);
-
     const formatCityOptions = (cities) => {
         const seenCities = new Set();
         return cities
@@ -73,7 +55,7 @@ const CitySearch = ({onCitySelect}) => {
 
     const handleInputChange = (inputValue) => {
         if (inputValue.length > 2) {
-            fetchCities(inputValue); // Call debounced fetch function
+            fetchCities(inputValue);
         }
     };
 
