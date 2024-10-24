@@ -11,11 +11,10 @@ import lombok.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@IdClass(NewsId.class)
 public class NewsArticle {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
+    @Id
     @Column(length = 1024)
     private String title;
 
@@ -25,6 +24,7 @@ public class NewsArticle {
     @Column(length = 2048)
     private String url;
 
+    @Id
     private String cityOfUSA;
 
     private String localOrGlobal;

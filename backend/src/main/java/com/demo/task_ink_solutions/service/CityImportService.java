@@ -31,7 +31,9 @@ public class CityImportService {
 
     @PostConstruct
     public void init() {
-        importCities();
+        if(cityRepository.count() == 0) {
+            importCities();
+        }
     }
 
     public List<City> findAll(){
@@ -58,7 +60,6 @@ public class CityImportService {
                 city.setName(row[3]);
                 city.setState(row[2]);
                 counter++;
-                logger.info("Saving {}. Total count {}", city.getName(),counter);
                 cityRepository.save(city);
             }
 
