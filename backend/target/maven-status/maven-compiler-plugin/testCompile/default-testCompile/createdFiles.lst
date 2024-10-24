@@ -1,0 +1,5 @@
+com\demo\task_ink_solutions\TaskInkSolutionsApplicationTests.class
+com\demo\task_ink_solutions\service\CityImportServiceTest.class
+com\demo\task_ink_solutions\service\ProcessOpenAITest.class
+com\demo\task_ink_solutions\service\NewsServiceImplTest.class
+com\demo\task_ink_solutions\service\NewsProcessServiceTest.class

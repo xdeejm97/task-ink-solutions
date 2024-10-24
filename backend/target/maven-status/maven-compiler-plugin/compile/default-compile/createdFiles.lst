@@ -1,0 +1,14 @@
+com\demo\task_ink_solutions\rest\CityController.class
+com\demo\task_ink_solutions\service\NewsProcessService.class
+com\demo\task_ink_solutions\service\CityImportService.class
+com\demo\task_ink_solutions\repository\CityRepository.class
+com\demo\task_ink_solutions\dto\ApiResponse$ArticleDTO.class
+com\demo\task_ink_solutions\dto\ApiResponse.class
+com\demo\task_ink_solutions\rest\LocalNewsController.class
+com\demo\task_ink_solutions\model\City.class
+com\demo\task_ink_solutions\config\RestTemplateConfig.class
+com\demo\task_ink_solutions\service\NewsServiceImpl.class
+com\demo\task_ink_solutions\service\ProcessOpenAI.class
+com\demo\task_ink_solutions\TaskInkSolutionsApplication.class
+com\demo\task_ink_solutions\model\NewsArticle.class
+com\demo\task_ink_solutions\repository\NewsArticleRepository.class
