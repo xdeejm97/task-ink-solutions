@@ -1,19 +1,17 @@
 package com.demo.task_ink_solutions.service;
 
-import com.opencsv.CSVReader;
 import com.demo.task_ink_solutions.model.City;
 import com.demo.task_ink_solutions.repository.CityRepository;
+import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,11 +29,17 @@ public class CityImportService {
         this.restTemplate = restTemplate;
     }
 
+    @PostConstruct
+    public void init() {
+        if(cityRepository.count() == 0) {
+            importCities();
+        }
+    }
+
     public List<City> findAll(){
         return cityRepository.findAll();
     }
 
-    @Transactional
     public void importCities() {
         String url = "https://raw.githubusercontent.com/kelvins/US-Cities-Database/main/csv/us_cities.csv";
         String csvData = restTemplate.getForObject(url, String.class);

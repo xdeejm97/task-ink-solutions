@@ -7,6 +7,8 @@ import lombok.*;
 @Table(name = "news", indexes = {
         @Index(name = "idx_city_name", columnList = "cityOfUSA"),
         @Index(name = "idx_is_local", columnList = "localOrGlobal")
+}, uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"title", "city_ofusa"})
 })
 @Getter
 @Setter

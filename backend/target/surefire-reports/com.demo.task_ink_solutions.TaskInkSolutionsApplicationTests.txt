@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.demo.task_ink_solutions.TaskInkSolutionsApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.712 s -- in com.demo.task_ink_solutions.TaskInkSolutionsApplicationTests

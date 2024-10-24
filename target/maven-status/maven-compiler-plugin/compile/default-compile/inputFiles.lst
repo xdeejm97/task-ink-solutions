@@ -1,0 +1,13 @@
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\config\RestTemplateConfig.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\dto\ApiResponse.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\model\City.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\model\NewsArticle.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\repository\CityRepository.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\repository\NewsArticleRepository.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\rest\CityController.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\rest\LocalNewsController.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\service\CityImportService.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\service\NewsProcessService.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\service\NewsServiceImpl.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\service\ProcessOpenAI.java
+C:\Users\Damian\Desktop\projects\task-ink-solutions\src\main\java\com\demo\task_ink_solutions\TaskInkSolutionsApplication.java
