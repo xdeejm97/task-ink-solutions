@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 import { debounce } from 'lodash';
@@ -10,27 +10,50 @@ const CitySearch = ({ onCitySelect }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isImporting, setIsImporting] = useState(false);
     const [error, setError] = useState(null);
-    const [lastSelectedCity, setLastSelectedCity] = useState(null); // Track the last selected city
+    const [lastSelectedCity, setLastSelectedCity] = useState(null);
     const navigate = useNavigate();
 
+    const fetchCities = useCallback(
+        debounce(async (inputValue) => {
+            if (!inputValue?.trim()) return;
+
+            setIsLoading(true);
+            setError(null);
+            try {
+                const response = await axios.get('http://localhost:8080/api/cities', {
+                    params: { query: inputValue, size: 100 }
+                });
+
+                const options = formatCityOptions(response.data);
+                setCityOptions(options);
+            } catch (error) {
+                console.error("Error fetching cities:", error);
+                setError("Failed to fetch cities");
+            } finally {
+                setIsLoading(false);
+            }
+        }, 300),
+        []
+    );
+
     useEffect(() => {
+        const checkAndImportCities = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/cities');
+                if (response.data.length === 0) {
+                    console.log("Cities not found, triggering import.");
+                    await importCities();
+                } else {
+                    setCityOptions(formatCityOptions(response.data));
+                }
+            } catch (error) {
+                console.error("Error checking cities:", error);
+                setError("Error loading cities");
+            }
+        };
+
         checkAndImportCities();
     }, []);
-
-    const checkAndImportCities = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/cities');
-            if (response.data.length === 0) {
-                console.log("Cities not found, triggering import.");
-                await importCities();
-            } else {
-                setCityOptions(formatCityOptions(response.data));
-            }
-        } catch (error) {
-            console.error("Error checking cities:", error);
-            setError("Error loading cities");
-        }
-    };
 
     const importCities = async () => {
         setIsImporting(true);
@@ -45,26 +68,6 @@ const CitySearch = ({ onCitySelect }) => {
             setError("Failed to import cities");
         } finally {
             setIsImporting(false);
-        }
-    };
-
-    const fetchCities = async (inputValue) => {
-        if (!inputValue?.trim()) return;
-
-        setIsLoading(true);
-        setError(null);
-        try {
-            const response = await axios.get('http://localhost:8080/api/cities', {
-                params: { query: inputValue, size: 100 }
-            });
-
-            const options = formatCityOptions(response.data);
-            setCityOptions(options);
-        } catch (error) {
-            console.error("Error fetching cities:", error);
-            setError("Failed to fetch cities");
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -86,11 +89,9 @@ const CitySearch = ({ onCitySelect }) => {
             }));
     };
 
-    const debouncedFetchCities = debounce(fetchCities, 300);
-
     const handleInputChange = (inputValue) => {
         if (inputValue.length > 2) {
-            debouncedFetchCities(inputValue);
+            fetchCities(inputValue); // Call debounced fetch function
         }
     };
 
