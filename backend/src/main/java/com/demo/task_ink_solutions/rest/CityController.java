@@ -2,27 +2,22 @@ package com.demo.task_ink_solutions.rest;
 
 import com.demo.task_ink_solutions.model.City;
 import com.demo.task_ink_solutions.repository.CityRepository;
-import com.demo.task_ink_solutions.service.CityImportService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(path = "/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CityController {
 
-    private final CityImportService cityImportService;
     private final CityRepository cityRepository;
 
-    public CityController(CityImportService cityImportService, CityRepository cityRepository) {
-        this.cityImportService = cityImportService;
+    public CityController(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
     }
 
@@ -41,16 +36,5 @@ public class CityController {
             cities = cityRepository.findAll(pageable);
         }
         return ResponseEntity.ok(cities.getContent());
-    }
-
-    @PostMapping(path = "/import-cities")
-    public ResponseEntity<?> importCities() {
-        try {
-            CompletableFuture.runAsync(cityImportService::importCities);
-            return ResponseEntity.accepted().body("City import process started");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to start city import: " + e.getMessage());
-        }
     }
 }
