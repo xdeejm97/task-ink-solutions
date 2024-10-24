@@ -7,6 +7,8 @@ import com.opencsv.exceptions.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class CityImportService {
         return cityRepository.findAll();
     }
 
+    @Transactional
     public void importCities() {
         String url = "https://raw.githubusercontent.com/kelvins/US-Cities-Database/main/csv/us_cities.csv";
         String csvData = restTemplate.getForObject(url, String.class);
@@ -46,17 +49,17 @@ public class CityImportService {
 
             csvReader.readNext();
 
-            List<City> cities = new ArrayList<>();
+            int counter = 0;
             String[] row;
             while ((row = csvReader.readNext()) != null) {
                 City city = new City();
                 city.setName(row[3]);
                 city.setState(row[2]);
-                cities.add(city);
+                counter++;
+                cityRepository.save(city);
             }
 
-            cityRepository.saveAll(cities);
-            logger.info("Imported {} cities.", cities.size());
+            logger.info("Imported {} cities.", counter);
         } catch (IOException | CsvException e) {
             logger.error("Error importing cities", e);
             throw new RuntimeException("Error importing cities", e);

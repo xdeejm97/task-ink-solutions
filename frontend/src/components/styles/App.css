@@ -1,0 +1,44 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background: linear-gradient(to right, #e0f7fa, #80deea);
+    padding: 20px;
+    margin-top: 0px;
+    font-family: 'Arial', sans-serif;
+}
+
+.app-header {
+    font-size: 2.5rem;
+    color: #00796b;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.home-button {
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.home-button:hover {
+    background-color: #004d40;
+    transform: scale(1.05);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
