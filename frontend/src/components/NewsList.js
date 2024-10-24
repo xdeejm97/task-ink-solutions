@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import './styles/NewsList.css';
 
-const NewsList = ({ selectedCity }) => {
+const NewsList = ({selectedCity}) => {
     const [newsArticles, setNewsArticles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Function to trigger backend news scraping
     const scrapeNewsForCity = async (city) => {
         try {
             await axios.post(`http://localhost:8080/api/scrape-news/${city}`);
@@ -17,21 +17,22 @@ const NewsList = ({ selectedCity }) => {
         }
     };
 
-    // Function to fetch news articles from backend after scraping
     const fetchNewsArticles = async (city) => {
         setIsLoading(true);
-        setError(null); // Reset error state on new fetch
+        setError(null);
 
         try {
             const response = await axios.get(`http://localhost:8080/api/news/city`, {
-                params: { city }
+                params: {city}
             });
 
             const filteredArticles = response.data.filter(article =>
                 article.cityOfUSA.toLowerCase() === city.toLowerCase()
             );
 
-            setNewsArticles(filteredArticles);
+            const uniqueArticles = removeDuplicateTitles(filteredArticles);
+
+            setNewsArticles(uniqueArticles);
         } catch (error) {
             console.error("Error fetching news articles:", error);
             setError("Failed to fetch news articles");
@@ -40,32 +41,39 @@ const NewsList = ({ selectedCity }) => {
         }
     };
 
+    const removeDuplicateTitles = (articles) => {
+        const seenTitles = new Set();
+        return articles.filter((article) => {
+            if (!seenTitles.has(article.title)) {
+                seenTitles.add(article.title);
+                return true;
+            }
+            return false;
+        });
+    };
+
     useEffect(() => {
         if (!selectedCity) return;
 
-        // Clear the previous news and errors when a new city is selected
         setNewsArticles([]);
         setError(null);
 
-        // Trigger scraping on backend
         scrapeNewsForCity(selectedCity)
             .then(() => {
-                // Wait 5 seconds for scraping to complete
                 setTimeout(() => {
-                    // Fetch the news articles after scraping
                     fetchNewsArticles(selectedCity);
                 }, 1200);
             })
-            .catch((error) => {
+            .catch(() => {
                 setError("Failed to scrape news articles");
             });
-    }, [selectedCity]); // Re-run the effect whenever selectedCity changes
+    }, [selectedCity]);
 
     return (
-        <div>
+        <div className="news-container">
             <h2>News for {selectedCity}</h2>
-            {isLoading && <p>Loading news articles...</p>}
-            {error && <p>{error}</p>}
+            {isLoading && <div className="loading-spinner"></div>}
+            {error && <p className="error-message">{error}</p>}
             <ul>
                 {newsArticles.map(article => (
                     <li key={article.id}>

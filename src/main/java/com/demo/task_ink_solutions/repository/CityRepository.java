@@ -11,6 +11,5 @@ import java.util.List;
 @Repository
 public interface CityRepository extends JpaRepository<City, Long> {
     List<City> findByNameIgnoreCase(String name);
-
     Page<City> findByNameContainingIgnoreCase(String query, Pageable pageable);
 }
